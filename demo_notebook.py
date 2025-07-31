@@ -22,10 +22,11 @@ def _():
 
 @app.cell
 def _(gpd, mo):
-    _url = f"{mo.notebook_location()}/public/adm2_risaralda.geojson"
+    _location = str(mo.notebook_location()).replace("/vsicurl/", "")
+    _url = f"{_location}/public/adm2_risaralda.geojson"
     boundaries_gdf = gpd.read_file(_url)
 
-    _url = f"{mo.notebook_location()}/public/amenities.geojson"
+    _url = f"{_location}/public/amenities.geojson"
     amenities_gdf = gpd.read_file(_url)
     return amenities_gdf, boundaries_gdf
 
