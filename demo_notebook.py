@@ -16,11 +16,12 @@ def _():
     import geopandas as gpd
     import folium
     import requests
+    import shutil
 
     from os.path import join
 
     TILES = "Cartodb dark_matter"
-    return TILES, folium, gpd, join, mo, requests
+    return TILES, folium, gpd, join, mo, requests, shutil
 
 
 @app.cell

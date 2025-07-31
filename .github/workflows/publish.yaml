@@ -23,7 +23,7 @@ jobs:
                 uv sync --locked
             - name: Export notebook
               run: |
-                  uv run marimo export html-wasm demo_notebook.py -o output/ --mode edit
+                  uv run marimo export html-wasm demo_notebook.py -o output/ --mode run
             - name: 📦 Upload Pages Artifact
               uses: actions/upload-pages-artifact@v3
               with:
