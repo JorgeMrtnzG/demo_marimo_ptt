@@ -22,7 +22,8 @@ def _():
 
 @app.cell
 def _(gpd, mo):
-    _location = str(mo.notebook_location()).replace("/vsicurl/", "")
+    _location = mo.notebook_location().as_posix()
+
     _url = f"{_location}/public/adm2_risaralda.geojson"
     boundaries_gdf = gpd.read_file(_url)
 
