@@ -70,6 +70,7 @@ def _(
     boundaries_gdf,
     folium,
     gpd,
+    mo,
 ):
     _filtered_bnd_gdf = (
         boundaries_gdf
@@ -98,15 +99,18 @@ def _(
         folium.GeoJson(
             _filtered_gdf,
             layer_name="amenities",
-            marker=folium.Circle(
-                stroke=False,
-                fill=True,
-            ),
+            marker=folium.Circle(fill=True),
             tooltip=_tooltip,
         ).add_to(map)
 
-    map
+    _table = mo.ui.table(data=_filtered_gdf)
+    mo.vstack([map, _table])
 
+    return
+
+
+@app.cell
+def _():
     return
 
 
