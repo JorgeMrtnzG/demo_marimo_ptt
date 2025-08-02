@@ -46,7 +46,7 @@ def _(gpd, join, mo, requests, shutil):
 
 @app.cell
 def _(amenities_gdf, boundaries_gdf, mo):
-    _amenities_options = amenities_gdf.amenity.unique().tolist()
+    _amenities_options = amenities_gdf.category.unique().tolist()
     amenities_dropdown = mo.ui.dropdown(
         label="Amenity", options=_amenities_options, searchable=True
     )
@@ -78,19 +78,19 @@ def _(
     )
 
     _filtered_gdf = gpd.overlay(amenities_gdf, _filtered_bnd_gdf, how="intersection")[
-        ["name", "amenity", "geometry"]
+        ["name", "category", "geometry"]
     ]
     _filtered_gdf = (
         _filtered_gdf
         if amenities_dropdown.value is None
-        else _filtered_gdf.loc[_filtered_gdf.amenity == amenities_dropdown.value]
+        else _filtered_gdf.loc[_filtered_gdf.category == amenities_dropdown.value]
     )
 
     _centroid = _filtered_bnd_gdf.dissolve().centroid.to_dict()[0]
 
-    map = folium.Map(tiles=TILES, location=(_centroid.y, _centroid.x), min_zoom=11)
+    map = folium.Map(tiles=TILES, location=(_centroid.y, _centroid.x), min_zoom=5)
 
-    _tooltip = folium.GeoJsonTooltip(fields=["name"])
+    _tooltip = folium.GeoJsonTooltip(fields=["name", "category"])
 
     folium.GeoJson(_filtered_bnd_gdf).add_to(map)
 
@@ -99,12 +99,8 @@ def _(
             _filtered_gdf,
             layer_name="amenities",
             marker=folium.Circle(
-                weigth=10,
-                radius=50,
                 stroke=False,
                 fill=True,
-                fill_opacity=0.6,
-                opacity=1,
             ),
             tooltip=_tooltip,
         ).add_to(map)
