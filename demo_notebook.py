@@ -20,7 +20,7 @@ def _():
 
     from os.path import join
 
-    TILES = "Cartodb dark_matter"
+    TILES = "Cartodb positron"
     return TILES, folium, gpd, join, mo, requests, shutil
 
 
